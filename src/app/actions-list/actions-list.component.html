@@ -1,0 +1,85 @@
+
+<div class="container">
+  <div class="row">
+
+
+    <div class="col-md-12">
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Actions List</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a routerLink="/home">Home</a></li>
+                <li class="breadcrumb-item active">Actions List</li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+
+
+      <div class="table-responsive">
+
+        <div class="wrap">
+          <div class="search">
+            <label> Action : </label>
+            <select  (change)="doSearch($event)" [(ngModel)]="action" >
+              <option value="" disabled>Choose your action</option>
+              <option *ngFor="let act of actions" [ngValue]="act">{{act}}</option>
+            </select>&nbsp;
+            <label> Agent : </label>
+            <select  (change)="doSearch($event)" [(ngModel)]="agent" >
+              <option value="" disabled>Choose your agent</option>
+              <option *ngFor="let agt of agents" [ngValue]="agt">{{agt.profilEntity.nom +" "+agt.profilEntity.prenom}}</option>
+            </select><br>
+            <label> Parent : </label>
+            <select  (change)="doSearch($event)" [(ngModel)]="parent" >
+              <option value="" disabled>Choose your parent</option>
+              <option *ngFor="let par of parents" [ngValue]="par.id">{{par.profilEntity.nom +" "+par.profilEntity.prenom}}</option>
+            </select>&nbsp;
+            <label>  Http Statut : </label>
+            <select  (change)="doSearch($event)" [(ngModel)]="status" >
+              <option value="" disabled>Choose your http status</option>
+              <option *ngFor="let stat of httpStatus" [ngValue]="stat">{{stat}}</option>
+            </select><br>
+            <label> Date from : </label>  <input type="datetime-local" [(ngModel)]="from" (ngModelChange)="doSearch($event)" >&nbsp;
+            <label> to : </label><input type="datetime-local" [(ngModel)]="to" (ngModelChange)="doSearch($event)" />
+          </div>
+        </div><br>
+        <table id="mytable" class="table table-bordred table-striped">
+
+          <thead>
+          <th>Uri</th>
+          <th>Http Status</th>
+          <th>Horaire</th>
+          <th>Action</th>
+          <th>Type compte</th>
+          <th>Profil</th>
+          </thead>
+
+          <tbody>
+          <tr *ngFor="let actionLog of pageOfItems">
+          <td>{{actionLog.uri}}</td>
+          <td>{{actionLog.httpStatus}}</td>
+          <td>{{actionLog.horaire}}</td>
+          <td>{{actionLog.action}}</td>
+          <td>{{actionLog.typeCompte}}</td>
+          <td>{{actionLog["agentParent"].nom + " "+ actionLog["agentParent"].prenom }}</td>
+          </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+
+  <jw-pagination [items]="actionList" (changePage)="onChangePage($event)" [pageSize]="pageSize"></jw-pagination>
+</div>
+
+
